@@ -36,7 +36,7 @@ const usuarioController = require('../controllers/usuarioController');
  *           type: string
  *           format: email
  *           example: "juan@example.com"
- *         contraseña:
+ *         password:
  *           type: string
  *           format: password
  *           example: "password123"
@@ -247,8 +247,8 @@ router.delete('/:email', usuarioController.remove);
  *               email:
  *                 type: string
  *                 format: email
- *                 example: "admin@example.com"
- *               contraseña:
+ *                 example: "admin@sthandier.com"
+ *               password:
  *                 type: string
  *                 format: password
  *                 example: "admin123"
@@ -280,6 +280,6 @@ router.delete('/:email', usuarioController.remove);
  */
 
 // Desactivar usuario
-router.put('/desactivate', usuarioController.desactiveUser);
+router.post('/desactivar', usuarioController.desactiveUser);
 
 module.exports = router;

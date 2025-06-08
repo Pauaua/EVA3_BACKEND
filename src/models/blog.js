@@ -34,10 +34,10 @@ const Blog = {
     // Crear una nueva entrada del blog
     create: async (entrada) => {
         try {
-            const { titulo, resumen, creado_por, cuerpo_texto, referencia, fecha_publicacion } = entrada;
+            const { titulo, resumen, creado_por, cuerpo_texto, referencias, fecha_creacion } = entrada;
             const [result] = await db.query(
-                'INSERT INTO blog (titulo, resumen, creado_por, cuerpo_texto, referencia, fecha_publicacion) VALUES (?, ?, ?, ?, ?, ?)',
-                [titulo, resumen, creado_por, cuerpo_texto, referencia, fecha_publicacion]
+                'INSERT INTO blog (titulo, resumen, creado_por, cuerpo_texto, referencias, fecha_creacion) VALUES (?, ?, ?, ?, ?, ?)',
+                [titulo, resumen, creado_por, cuerpo_texto, referencias, fecha_creacion]
             );
             console.log("Entrada del blog creada");
             return result.insertId;
@@ -49,10 +49,10 @@ const Blog = {
     //Actualizar una entrada del blog
     update: async (id, datosActualizados) => {
         try {
-            const { titulo, resumen, creado_por, cuerpo_texto, referencia, fecha_publicacion } = datosActualizados;
+            const { titulo, resumen, creado_por, cuerpo_texto, referencias, fecha_creacion } = datosActualizados;
             const [result] = await db.query(
-                "UPDATE blog SET titulo = ?, resumen = ?, creado_por = ?, cuerpo_texto = ?, referencia = ?, fecha_publicacion = ? WHERE id = ?",
-                [titulo, resumen, creado_por, cuerpo_texto, referencia, fecha_publicacion, id]
+                "UPDATE blog SET titulo = ?, resumen = ?, creado_por = ?, cuerpo_texto = ?, referencias = ?, fecha_creacion = ? WHERE id = ?",
+                [titulo, resumen, creado_por, cuerpo_texto, referencias, fecha_creacion, id]
             );
             console.log("Entrada del blog actualizada");
             return result.affectedRows > 0 

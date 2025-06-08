@@ -30,8 +30,8 @@ const Usuarios = {
     create: async (usuario) => {
         try {
             const [rows] = await db.query(
-            'INSERT INTO usuarios (nombre, apellido, email, contraseña, rol, telefono, direccion) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [usuario.nombre, usuario.apellido, usuario.email, usuario.contraseña, usuario.rol, usuario.telefono, usuario.direccion]
+            'INSERT INTO usuarios (nombre, apellido, email, password, rol, telefono, direccion) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [usuario.nombre, usuario.apellido, usuario.email, usuario.password, usuario.rol, usuario.telefono, usuario.direccion]
         );
         if (rows.affectedRows > 0) {
             return { message: "Usuario creado exitosamente." };
@@ -48,8 +48,8 @@ const Usuarios = {
     update: async (usuario) => {
         try {
             const [rows] = await db.query(
-                "UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, contraseña = ?, rol = ?, telefono = ?, direccion = ? WHERE email = ?",
-                [usuario.nombre, usuario.apellido, usuario.email_nuevo, usuario.contraseña, usuario.rol, usuario.email, usuario.telefono, usuario.direccion]
+                "UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, password = ?, rol = ?, telefono = ?, direccion = ? WHERE email = ?",
+                [usuario.nombre, usuario.apellido, usuario.email_nuevo, usuario.password, usuario.rol, usuario.email, usuario.telefono, usuario.direccion]
             );
             console.log("Usuario actualizado");
             if (rows.affectedRows > 0) {
@@ -83,8 +83,8 @@ const Usuarios = {
         try {
             // LOGIN
             const [rows] = await db.query(
-                "SELECT * FROM usuarios WHERE email = ? and contraseña = ?",
-                [usuario.email, usuario.contraseña]
+                "SELECT * FROM usuarios WHERE email = ? and password = ?",
+                [usuario.email, usuario.password]
             );
             if (rows.length > 0) {
                 // VALIDAMOS ROL y el estado del Reclutador 

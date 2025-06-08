@@ -10,6 +10,38 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
+// Ruta para la página de inicio (localhost:3000)
+app.get('/', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Antigüedades Sthandier - Backend</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+          margin-top: 50px;
+          background-color: #f5f5f5;
+        }
+        h1 {
+          color: #2c3e50;
+        }
+        a {
+          color:rgb(183, 52, 219);
+          text-decoration: none;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>¡Bienvenido al Backend de Antigüedades Sthandier!</h1>
+      <p><a href="/api-docs">Documentación de la API - Swagger UI</a></p>
+      <p>Estado del servidor: <strong>Activo</strong> ✅</p>
+    </body>
+    </html>
+  `);
+});
+
 // Configuración de Swagger
 const swaggerOptions = {
   definition: {
@@ -20,7 +52,7 @@ const swaggerOptions = {
       description: 'Documentación para el CRUD de productos, reservas y usuarios',  
     },
     servers: [  // URL base de la API
-      { url: 'http://localhost:3000/api' },  
+      { url: 'http://localhost:3000/' },  
     ],
     components: { 
         securitySchemes: {

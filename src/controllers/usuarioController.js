@@ -1,3 +1,4 @@
+const db = require('../config/db');
 const Usuarios = require('../models/usuario');
 
 const getAll = async (req, res) => {
@@ -56,14 +57,33 @@ const remove = async (req, res) => {
 };
 
 const desactiveUser = async (req, res) => {
-    try {
-        const usuario = req.body;
-        const result = await Usuarios.desactiveUser(usuario);
-        res.status(200).json(result);
-    } catch (err) {
-        console.error("Error al desactivar el usuario: ", err);
-        res.status(500).json({ error: "Error al desactivar el usuario" });
+  try {
+    const { email, email_modificar, estado } = req.body;
+
+    // Verificar si es admin
+    const [adminUser] = await db.query(
+      'SELECT rol FROM usuarios WHERE email = ?',
+      [email]
+    );
+
+    if (adminUser[0].rol !== 'admin') {
+      return res.status(403).json({ error: 'Solo administradores pueden desactivar usuarios' });
     }
+
+    // Actualizar estado de usuario
+    const [result] = await db.query(
+      'UPDATE usuarios SET estado = ? WHERE email = ?',
+      [estado, email_modificar]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    res.json({ message: `Usuario ${email_modificar} actualizado a estado: ${estado}` });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 module.exports = { getAll, getById, create, update, remove, desactiveUser };
